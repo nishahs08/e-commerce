@@ -4,25 +4,44 @@ import { commerce } from './lib/commerce';
 import { Products } from './Components/Products/Products';
 import { Navbar } from './Components/Navbar/Navbar';
 import { useEffect, useState } from 'react';
+import { SettingsApplicationsRounded } from '@material-ui/icons';
 function App() {
   const [products, setProducts] = useState([]);
-  
-  useEffect(()=>{
-    const getProducts = async()=>{
-      try{
-      const {data} = await commerce.products.list();
-      console.log("data",data);
+  const [cart, setCart] = useState({})
+  const getProducts = async () => {
+    try {
+      const { data } = await commerce.products.list();
       setProducts(data)
-      }catch(err){
-        console.log("error",err)
-      }
+    } catch (err) {
+      console.log(err)
     }
-    getProducts()
-  },[])
+  }
+  const getCart = async () => {
+    try {
+      setCart(await commerce.cart.retrieve());
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const handleAddtoCart = async(productId,quantity)=>{
+    try {
+      const item = await commerce.cart.add(productId,quantity);
+      console.log(item.cart)
+      setCart(item.cart)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  useEffect(() => {
+    getProducts();
+    getCart()
+  }, [])
+
   return (
     <>
-      <Navbar />
-      <Products products={products}/>
+      <Navbar totalItems={cart.total_items}/>
+      <Products products={products} onAddToCart={handleAddtoCart}/>
     </>
   );
 }
