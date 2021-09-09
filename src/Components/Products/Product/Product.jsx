@@ -2,32 +2,28 @@ import { CardActions, Typography,Card,CardMedia,IconButton,CardContent } from '@
 import {makeStyles} from '@material-ui/core/styles';
 import {ShoppingCart} from '@material-ui/icons';
 import { AddShoppingCart } from '@material-ui/icons';
-const useStyles =  makeStyles(()=>({
+const useStyles= makeStyles(() => ({
     root: {
-        // maxWidth: 345, original width style
-        maxWidth: '345px',
-        maxHeight:'380px',
-      
-      },
-      media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-      },
-      cardActions: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-      },
-      cardContent: {
-        display: 'flex',
-        justifyContent: 'space-between',
-      },
-}))
+      maxWidth: '100%',
+    },
+    media: {
+      height: 0,
+      paddingTop: '56.25%',
+    },
+    cardActions: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+    },
+    cardContent: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+  }));
 
 export const Product = ({product,onAddToCart})=>{
     const classes=useStyles();
     return(
         <Card className={classes.root}>
-         
         <CardMedia className={classes.media} image={product.media.source} title={product.name} />
         <CardContent>
           <div className={classes.cardContent}>
@@ -39,9 +35,9 @@ export const Product = ({product,onAddToCart})=>{
             </Typography>
           </div>
           <Typography dangerouslySetInnerHTML={{ __html: product.description }} variant="body2" color="textSecondary" component="p" />
-        </CardContent> 
+        </CardContent>
         <CardActions disableSpacing className={classes.cardActions}>
-          <IconButton aria-label="Add to Cart" onClick={()=>onAddToCart(product.id,1)} >
+          <IconButton aria-label="Add to Cart" onClick={onAddToCart}>
             <AddShoppingCart />
           </IconButton>
         </CardActions>
