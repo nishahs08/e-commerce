@@ -11,6 +11,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { useState } from "react";
+import {AddressForm} from './AddressForm';
+import {PaymentForm} from './PaymentForm'
 const steps = ["Shipping address", "Payment details"];
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -65,6 +67,13 @@ const useStyles = makeStyles((theme) => ({
 export const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
 const classes=useStyles();
+
+const Confirmation = () =>(
+  <div>
+    Confirmation
+  </div>
+)
+const Form=()=>activeStep === 0 ? <AddressForm/> : <PaymentForm/>
   return (
     <div className={classes.toolbar}>
       <main className={classes.layout}>
@@ -77,6 +86,7 @@ const classes=useStyles();
               </Step>
             ))}
           </Stepper>
+          {activeStep === steps.length ? <Confirmation/> :<Form/>}
         </Paper>
       </main>
     </div>
