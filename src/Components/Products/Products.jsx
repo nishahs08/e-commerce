@@ -14,6 +14,8 @@ const useStyles=  makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
+
+   
   },
   root: {
     flexGrow: 1,
@@ -24,11 +26,9 @@ export const Products = ({products,onAddToCart}) => {
   const classes=useStyles();
   return (
     <main className={classes.content}>
-           <Toolbar></Toolbar>
-      <div className={classes.toolbar}>
-
-
-      <Grid container justify="center" spacing={4}>
+      
+      <div className={classes.toolbar} />
+      <Grid container justify="center" spacing={4} >
         {products.length === 0 ? 
         new Array(6).fill(0).map((k,i) => (  <Grid item key={i} xs={12} sm={6} md={4} lg={3}>
          <Loading/>
@@ -41,8 +41,10 @@ export const Products = ({products,onAddToCart}) => {
         ))
         }
       </Grid>
-      </div>
+ 
     </main>
+
+    
   );
 };
 

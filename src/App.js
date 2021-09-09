@@ -4,7 +4,10 @@ import { commerce } from './lib/commerce';
 import { Products } from './Components/Products/Products';
 import { Navbar } from './Components/Navbar/Navbar';
 import { useEffect, useState } from 'react';
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
 import { SettingsApplicationsRounded } from '@material-ui/icons';
+import {Container} from '@material-ui/core';
+import { Cart } from './Components/Cart/Cart'
 function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({})
@@ -40,10 +43,17 @@ function App() {
 
   return (
     <>
-      <Navbar totalItems={cart.total_items}/>
-      <Products products={products} onAddToCart={handleAddtoCart}/>
+   <Router>
+   <Navbar totalItems={cart.total_items}/>
+     <Switch>
+       <Route exact path='/' render={(props)=><Products products={products} onAddToCart={handleAddtoCart}/>}/>
+       <Route exact path='/cart' render={(props)=><Cart cart={cart}/>}/>
+     </Switch>
+   </Router>
+    
+  
     </>
   );
 }
 
-export default App;
+export default App; 

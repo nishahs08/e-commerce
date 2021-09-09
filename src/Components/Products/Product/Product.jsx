@@ -7,12 +7,11 @@ const useStyles =  makeStyles(()=>({
         // maxWidth: 345, original width style
         maxWidth: '345px',
         maxHeight:'380px',
-       
+      
       },
       media: {
         height: 0,
         paddingTop: '56.25%', // 16:9
-        width:'100%'
       },
       cardActions: {
         display: 'flex',
@@ -28,6 +27,7 @@ export const Product = ({product,onAddToCart})=>{
     const classes=useStyles();
     return(
         <Card className={classes.root}>
+         
         <CardMedia className={classes.media} image={product.media.source} title={product.name} />
         <CardContent>
           <div className={classes.cardContent}>
@@ -39,7 +39,7 @@ export const Product = ({product,onAddToCart})=>{
             </Typography>
           </div>
           <Typography dangerouslySetInnerHTML={{ __html: product.description }} variant="body2" color="textSecondary" component="p" />
-        </CardContent>
+        </CardContent> 
         <CardActions disableSpacing className={classes.cardActions}>
           <IconButton aria-label="Add to Cart" onClick={()=>onAddToCart(product.id,1)} >
             <AddShoppingCart />

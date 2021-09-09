@@ -9,7 +9,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles, alpha } from "@material-ui/core/styles";
 import logo from "../../Asset/logo.png";
-import {ShoppingCart} from '@material-ui/icons' 
+import { ShoppingCart } from "@material-ui/icons";
+import { Link ,useLocation} from "react-router-dom";
 const drawerWidth = 0;
 
 const useStyles = makeStyles((theme) => ({
@@ -77,24 +78,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Navbar = ({totalItems}) => {
+export const Navbar = ({ totalItems }) => {
   const classes = useStyles();
+  const location=useLocation();
+  
   return (
     <>
       <AppBar position="fixed" className={classes.appBar} color="inhenrit">
         <Toolbar>
-          <Typography variant="h6" className={classes.title} color="inherit">
+          <Typography variant="h6" className={classes.title} color="inherit" component={Link} to='/'>
             <img src={logo} height="25px" className={classes.image} />
             Commerce.js
           </Typography>
           <div className={classes.grow} />
+          {(location.pathname === '/') && 
           <div className={classes.button}>
-        <IconButton aria-label="Show cart items" color='inherit'>
-          <Badge badgeContent={totalItems} color="secondary">
-            <ShoppingCart/>
-          </Badge>
-        </IconButton>
+            <IconButton aria-label="Show cart items" color="inherit" component={Link} to='/cart'>
+              <Badge badgeContent={totalItems} color="secondary">
+                <ShoppingCart />
+              </Badge>
+            </IconButton>
           </div>
+}
         </Toolbar>
       </AppBar>
     </>
