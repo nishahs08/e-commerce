@@ -83,7 +83,7 @@ function App() {
             onUpdateCartQty={handleUpdateCartQty}
            onRemoveFromCart={handleRemoveFromCart}
            onEmptyCart={handleEmptyCart} />} />
-           <Route exact path='/checkout' component={Checkout}/>
+           <Route exact path='/checkout' component={Checkout} cart={cart}/>
         </Switch>
       </Router>
 
