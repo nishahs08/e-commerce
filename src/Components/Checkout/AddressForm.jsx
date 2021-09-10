@@ -20,7 +20,7 @@ export const AddressForm = ({ checkoutToken ,next}) => {
     const [shippingOptions, setShippingOptions] = useState([]);
     const [shippingOption, setShippingOption] = useState("");
 
-    const method = useForm();
+    const methods = useForm();
 
     const getShippingCountries = async (token) => {
         try {
@@ -80,15 +80,15 @@ export const AddressForm = ({ checkoutToken ,next}) => {
             <Typography variant="h6" gutterBottom>
                 Shipping Address
       </Typography>
-            <FormProvider {...method}>
-                <form onSubmit={method.handleSubmit((data)=>next({...data,shippingCountry,shippingSubdivision,shippingOption}))}>
+            <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit((data) => next({ ...data, shippingCountry, shippingSubdivision, shippingOption }))}>
                     <Grid container spacing={3}>
-                        <CustomTextField required name="First Name" label="First Name" />
-                        <CustomTextField required name="Last Name" label="Last Name" />
-                        <CustomTextField required name="address" label="Address" />
+                        <CustomTextField required  name="firstName" label="First name"/>
+                        <CustomTextField required name="lastName" label="Last name"/>
+                        <CustomTextField required name="address1" label="Address line 1" />
                         <CustomTextField required name="email" label="Email" />
-                        <CustomTextField required name="city" label="City" />
-                        <CustomTextField required name="zip" label="ZIP" />
+                        <CustomTextField required name="city" label="City"  />
+                        <CustomTextField required name="zip" label="Zip / Postal code" />
                         <Grid item xs={12} sm={6}>
                             <InputLabel>Shipping Country</InputLabel>
                             <Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)}>
@@ -129,7 +129,7 @@ export const AddressForm = ({ checkoutToken ,next}) => {
                     <br />
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Button component={Link} to="/cart" variant="outlined">Back to Cart</Button>
-                        <Button type="submit" variant="contained" color="primary">Next</Button>
+                        <Button type="submit" variant="contained" color="primary" >Next</Button>
                     </div>
                 </form>
             </FormProvider>

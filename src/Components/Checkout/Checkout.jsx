@@ -8,12 +8,14 @@ import {
   Divider,
   Button,
 } from "@material-ui/core";
+import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { commerce } from "../../lib/commerce";
 import { AddressForm } from "./AddressForm";
 import { PaymentForm } from "./PaymentForm";
 const steps = ["Shipping address", "Payment details"];
+
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: "relative",
@@ -64,10 +66,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
 }));
-export const Checkout = ({ cart }) => {
+export const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
-  const [shippingData, setShippingData] = useState();
+  const [shippingData, setShippingData] = useState({});
   const classes = useStyles();
 
   useEffect(() => {
@@ -86,12 +88,41 @@ export const Checkout = ({ cart }) => {
       generateToken();
     }
   }, [cart]);
-  const nextStep = () => setActiveStep(preActiveStep => preActiveStep + 1);
-  const backStep = () => setActiveStep(preActiveStep => preActiveStep - 1);
+  const nextStep = () => setActiveStep((prev)=>prev+ 1);
+  const backStep = () => setActiveStep((prev)=>prev- 1);
 
-  const next = (data) => setShippingData(data)
-  const Confirmation = () => <div>Confirmation</div>;
-  const Form = () => (activeStep == 0 ? <AddressForm checkoutToken={checkoutToken} next={next}/> : <PaymentForm />);
+  const next = (data) =>{
+    console.log(data)
+    setShippingData(data)
+    nextStep();
+  }
+
+  let Confirmation = () => (order.customer ? (
+    <>
+      <div>
+        <Typography variant="h5">Thank you for your purchase, {order.customer.firstname} {order.customer.lastname}!</Typography>
+        <Divider className={classes.divider} />
+        <Typography variant="subtitle2">Order ref: {order.customer_reference}</Typography>
+      </div>
+      <br />
+      <Button component={Link} variant="outlined" type="button" to="/">Back to home</Button>
+    </>
+  ) : (
+    <div className={classes.spinner}>
+      <CircularProgress />
+    </div>
+  ));
+
+  if (error) {
+    Confirmation = () => (
+      <>
+        <Typography variant="h5">Error: {error}</Typography>
+        <br />
+        <Button component={Link} variant="outlined" type="button" to="/">Back to home</Button>
+      </>
+    );
+  }
+  const Form = () => (activeStep == 0 ? <AddressForm checkoutToken={checkoutToken} next={next}/> : <PaymentForm checkoutToken={checkoutToken} backStep={backStep} />);
 
   return (
     <div className={classes.toolbar}>

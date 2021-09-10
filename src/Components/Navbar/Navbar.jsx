@@ -84,7 +84,7 @@ export const Navbar = ({ totalItems }) => {
   
   return (
     <>
-      <AppBar position="fixed" className={classes.appBar} color="inhenrit">
+      <AppBar position="fixed" className={classes.appBar} color="inherit">
         <Toolbar>
           <Typography variant="h6" className={classes.title} color="inherit" component={Link} to='/'>
             <img src={logo} height="25px" className={classes.image} />
