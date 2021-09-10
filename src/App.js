@@ -16,6 +16,7 @@ function App() {
   const getProducts = async () => {
     try {
       const { data } = await commerce.products.list();
+      console.log(data)
       setProducts(data)
     } catch (err) {
       console.log(err)
@@ -83,7 +84,7 @@ function App() {
             onUpdateCartQty={handleUpdateCartQty}
            onRemoveFromCart={handleRemoveFromCart}
            onEmptyCart={handleEmptyCart} />} />
-           <Route exact path='/checkout' component={Checkout} cart={cart}/>
+           <Route exact path='/checkout' component={(props)=><Checkout {...props} cart={cart}/>} />
         </Switch>
       </Router>
 

@@ -67,27 +67,32 @@ const useStyles = makeStyles((theme) => ({
 export const Checkout = ({ cart }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
+  const [shippingData, setShippingData] = useState();
   const classes = useStyles();
 
   useEffect(() => {
-    if(cart && cart.id){
-    const generateToken = async () => {
-      try {
-        const token = await commerce.checkout.generateToken(cart.id, {
-          type: "cart",
-        });
-        setCheckoutToken(token)
-        console.log(token);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    generateToken();
-  }
-   
-  },[cart]);
+    if (cart && cart.id) {
+      const generateToken = async () => {
+        try {
+          const token = await commerce.checkout.generateToken(cart.id, {
+            type: "cart",
+          });
+          setCheckoutToken(token)
+          console.log("token", token);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      generateToken();
+    }
+  }, [cart]);
+  const nextStep = () => setActiveStep(preActiveStep => preActiveStep + 1);
+  const backStep = () => setActiveStep(preActiveStep => preActiveStep - 1);
+
+  const next = (data) => setShippingData(data)
   const Confirmation = () => <div>Confirmation</div>;
-  const Form = () => (activeStep === 0 ? <AddressForm checkoutToken={checkoutToken}/> : <PaymentForm />);
+  const Form = () => (activeStep == 0 ? <AddressForm checkoutToken={checkoutToken} next={next}/> : <PaymentForm />);
+
   return (
     <div className={classes.toolbar}>
       <main className={classes.layout}>
@@ -100,7 +105,7 @@ export const Checkout = ({ cart }) => {
               </Step>
             ))}
           </Stepper>
-          {activeStep === steps.length ? <Confirmation /> : <Form />}
+          {activeStep === steps.length ? <Confirmation /> : checkoutToken && <Form />}
         </Paper>
       </main>
     </div>

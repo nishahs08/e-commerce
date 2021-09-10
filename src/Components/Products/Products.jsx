@@ -30,7 +30,7 @@ export const Products = ({products,onAddToCart}) => {
       <div className={classes.toolbar} />
       <Grid container justify="center" spacing={4} >
         {products.length === 0 ? 
-        new Array(6).fill(0).map((k,i) => (  <Grid item key={i} xs={12} sm={6} md={4} lg={3}>
+        new Array(6).fill(0).map((k,i) => ( <Grid item key={i} xs={12} sm={6} md={4} lg={3}>
          <Loading/>
           </Grid>))
         :
